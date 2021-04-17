@@ -1,5 +1,5 @@
 [THINGSPEAK]
-TOPICO_PUBLISH=channels/1361139/publish/3CCCG12WISG8JD9I
-TOPICO_SUBSCRIBE=channels/1361139/subscribe/json/TEUS02SI2N1C7QD1
-USERNAME=mwa0000022231657
-MQTT_API_KEY=D02UB5T60LG5FRQX
+TOPICO_PUBLISH=channels/<id_canal>/publish/<chave_api_escrita_canal>
+TOPICO_SUBSCRIBE=channels/<id_canal>/subscribe/json/<chave_api_leitura_canal>
+USERNAME=
+MQTT_API_KEY=
