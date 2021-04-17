@@ -3,18 +3,25 @@ import paho.mqtt.publish as publish
 import random
 import time
 import configparser
-broker="mqtt.thingspeak.com" #broker ThingSpeak
-port=1883 #porta
-config=configparser.ConfigParser()
+
+broker = "mqtt.thingspeak.com"
+port = 1883
+config = configparser.ConfigParser()
 config.read('conf')
-topico=config['THINGSPEAK']['TOPICO_PUBLISH']
-valor_temperatura=0
-valor_umidade=0
-#Documentação API MQTT https://www.mathworks.com/help/thingspeak/publishtoachannelfeed.html
+topico = config['THINGSPEAK']['TOPICO_PUBLISH']
+detectar_movimento = 0
+estado = "fechado"
+
 while(True):
-    valor_temperatura=(random.random()+0.0001)*100
-    valor_umidade=(random.random()+0.001)*200
-    dados="field1={:.2f}&field2={:.2f}&status=MQTTPUBLISH".format(valor_temperatura,valor_umidade)
-    publish.single(payload=dados,topic=topico,port=port,hostname=broker)
+    detectar_movimento = random.randint(0, 1)
+    #dados="field1={:.2f}&status=MQTTPUBLISH".format(detectar_movimento)
+    if detectar_movimento == 0:
+        estado = "fechado"
+        dados="field1={:.2f}&field2={}&status=MQTTPUBLISH".format(detectar_movimento,estado)
+    elif detectar_movimento == 1:
+        estado = "ABRIU"
+        dados="field1={:.2f}&field2={}&status=MQTTPUBLISH".format(detectar_movimento,estado)
+    publish.single(payload=dados, topic=topico, port=port, hostname=broker)
     print(dados)
-    time.sleep(20)
+    time.sleep(2)
+#python pubmqtt-thingspeak.py
